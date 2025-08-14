@@ -24,7 +24,12 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<Product> Products { get; set; }
 
  
+    /* 
+     * 
+     * proprietà inizializzate dallo scaffolding, in base allo schema del db  
+     
 
+     */
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Client>(entity =>
