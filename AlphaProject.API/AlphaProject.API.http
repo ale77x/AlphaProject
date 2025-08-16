@@ -4,4 +4,20 @@ GET {{AlphaProject.API_HostAddress}}/api/Products
 Accept: application/json
 
 ###commento
- 
+
+PUT {{AlphaProject.API_HostAddress}}/api/Products/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productId": 1,
+  "name": "Prodotto Xx",  
+  "price": 99.99,
+  "Stock": 15
+} 
+
+###
+
+
+GET {{AlphaProject.API_HostAddress}}/api/OrderItems
+Accept: application/json
