@@ -61,12 +61,21 @@ namespace AlphaProject.API.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutProduct(int id, ProductDto productDto)
         {
-            if (id != product.ProductId)
+            if (id != productDto.ProductId)
             {
                 return BadRequest();
             }
+
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // Mappa i campi da ProductDto a Product
+            _mapper.Map(productDto, product);
 
             _context.Entry(product).State = EntityState.Modified;
 
@@ -92,12 +101,23 @@ namespace AlphaProject.API.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
         {
+            // Mappa il DTO in un'entità Product
+            var product = _mapper.Map<Product>(productDto);
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            // Mappa l'entità salvata in un DTO per la risposta
+            var createdProductDto = _mapper.Map<ProductDto>(product);
+
+            // Restituisce HTTP 201 (Created) con header "Location" che punta all'URL della nuova risorsa.
+            // ASP.NET Core genera automaticamente l'URL cercando l'action "GetProduct" in questo controller,
+            // e applicando i route template definiti dall'attributo [HttpGet("{id}")]. 
+            // Il valore passato (new { id = product.ProductId }) viene usato per sostituire il parametro {id} nella route.
+            // In questo modo il client ottiene sia i dati creati (nel body) sia il percorso per recuperarli via GET.
+            return CreatedAtAction("GetProduct", new { id = product.ProductId }, createdProductDto);
         }
 
         // DELETE: api/Products/5
