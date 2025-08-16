@@ -43,14 +43,17 @@ namespace AlphaProject.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-                    
+            // Carica anche gli OrderItems associati al prodotto
+            var product = await _context.Products
+                .Include(p => p.OrderItems)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+
             if (product == null)
             {
                 return NotFound();
             }
-            // Map the product to ProductDto
-            ProductDto pDto = _mapper.Map<ProductDto>(product);   
+            // Mappa il prodotto (con OrderItems) a ProductDto
+            ProductDto pDto = _mapper.Map<ProductDto>(product);
 
             return pDto;
         }
