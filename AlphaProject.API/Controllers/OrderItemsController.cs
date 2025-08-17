@@ -29,38 +29,37 @@ namespace AlphaProject.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderItemDto>>> GetOrderItems()
         {
-            // Fetch all order items and map them to DTOs
             var orderItems = await _context.OrderItems.ToListAsync();
-                       
             return Ok(_mapper.Map<List<OrderItemDto>>(orderItems));
         }
 
         // GET: api/OrderItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderItem>> GetOrderItem(int id)
+        public async Task<ActionResult<OrderItemDto>> GetOrderItem(int id)
         {
             var orderItem = await _context.OrderItems.FindAsync(id);
-
             if (orderItem == null)
             {
                 return NotFound();
             }
-
-            return orderItem;
+            return Ok(_mapper.Map<OrderItemDto>(orderItem));
         }
 
         // PUT: api/OrderItems/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
+        public async Task<IActionResult> PutOrderItem(int id, OrderItemDto orderItemDto)
         {
-            if (id != orderItem.OrderItemId)
+            if (id != orderItemDto.OrderItemId)
             {
                 return BadRequest();
             }
-
+            var orderItem = await _context.OrderItems.FindAsync(id);
+            if (orderItem == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(orderItemDto, orderItem);
             _context.Entry(orderItem).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -76,19 +75,18 @@ namespace AlphaProject.API.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/OrderItems
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
+        public async Task<ActionResult<OrderItemDto>> PostOrderItem(OrderItemDto orderItemDto)
         {
+            var orderItem = _mapper.Map<OrderItem>(orderItemDto);
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrderItem", new { id = orderItem.OrderItemId }, orderItem);
+            var createdDto = _mapper.Map<OrderItemDto>(orderItem);
+            return CreatedAtAction("GetOrderItem", new { id = orderItem.OrderItemId }, createdDto);
         }
 
         // DELETE: api/OrderItems/5
