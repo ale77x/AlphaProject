@@ -19,5 +19,36 @@ Accept: application/json
 ###
 
 
+GET {{AlphaProject.API_HostAddress}}/api/Orders/2
+Accept: application/json
+
+###
+# POST - CREATE ORDER (Ordine semplice senza articoli)
+POST {{AlphaProject.API_HostAddress}}/api/Orders
+Content-Type: application/json
+Accept: application/json
+
+{
+  "clientId": 1,
+  "totalAmount": 99.99
+}
+
+
+###
+# 1. Cliente crea un ordine completo
+POST {{AlphaProject.API_HostAddress}}/api/Orders
+Content-Type: application/json
+Accept: application/json
+
+{
+  "ClientId": 1,
+   "TotalAmount": 149.97,
+   "OrderItems": [
+     { "productId": 1, "quantity": 2, "unitPrice": 49.99 },
+     { "productId": 2, "quantity": 10, "unitPrice": 549.99 }
+   ]
+}
+
+###
 GET {{AlphaProject.API_HostAddress}}/api/OrderItems
 Accept: application/json
