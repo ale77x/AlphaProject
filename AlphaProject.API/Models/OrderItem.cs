@@ -20,6 +20,11 @@ public partial class OrderItem
     [Column(TypeName = "decimal(10, 2)")]
     public decimal UnitPrice { get; set; }
 
+    /* Concurrency token for save conflict control
+    [Timestamp]
+    public byte[] RowVersion { get; set; } = null!;
+    */
+
     [ForeignKey("OrderId")]
     [InverseProperty("OrderItems")]
     public virtual Order Order { get; set; } = null!;

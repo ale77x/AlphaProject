@@ -24,7 +24,6 @@ public partial class Client
     [StringLength(20)]
     public string? Phone { get; set; }
 
-    [Column(TypeName = "datetime")]
     public DateTime CreatedAt { get; set; }
 
     [InverseProperty("Client")]
