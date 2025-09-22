@@ -13,7 +13,6 @@ public partial class Order
 
     public int ClientId { get; set; }
 
-    [Column(TypeName = "datetime")]
     public DateTime OrderDate { get; set; }
 
     [Column(TypeName = "decimal(10, 2)")]
