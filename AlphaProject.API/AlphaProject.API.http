@@ -5,21 +5,33 @@ Accept: application/json
 
 ###commento
 
-PUT {{AlphaProject.API_HostAddress}}/api/Products/1
+PUT {{AlphaProject.API_HostAddress}}/api/Products/2
 Content-Type: application/json
 Accept: application/json
 
 {
-  "productId": 1,
-  "name": "Prodotto Xx",  
-  "price": 99.99,
-  "Stock": 15
+  "productId": 2, 
+  "Name": "Asciugatrice",
+  "Price": 400.00,
+  "Stock": 2,
+  "Description": "Miele"
 } 
 
 ###
 
+POST {{AlphaProject.API_HostAddress}}/api/Products
+Content-Type: application/json
+Accept: application/json
+{  
+  "name": "Asciugatrice",  
+  "price": 400.00,
+  "Stock": 1
+} 
 
-GET {{AlphaProject.API_HostAddress}}/api/Orders/2
+
+
+###
+GET {{AlphaProject.API_HostAddress}}/api/Orders/1
 Accept: application/json
 
 ###
@@ -51,4 +63,8 @@ Accept: application/json
 
 ###
 GET {{AlphaProject.API_HostAddress}}/api/OrderItems
+Accept: application/json
+
+###Clients
+GET {{AlphaProject.API_HostAddress}}/api/Clients
 Accept: application/json
