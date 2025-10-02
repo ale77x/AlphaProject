@@ -1,6 +1,21 @@
 @AlphaProject.API_HostAddress = http://localhost:5051
 
+###  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjYxZDBlZDIxLWRjMmEtNDZlNy1iZTRhLWJmZDczYjE1MGRlNiIsImV4cCI6MTc1OTQ0MDQyMiwiaXNzIjoiQWxwaGFQcm9qZWN0SXNzdWVyIiwiYXVkIjoiQWxwaGFQcm9qZWN0QXVkaWVuY2UifQ.mz0kHR7I3JylLnnWpVyAFjmsgw0JNlGeX8eO1poovUQ",
+
+
+POST {{AlphaProject.API_HostAddress}}/api/Auth/login
+Content-Type: application/json
+Accept: application/json
+{
+  "username": "admin",
+  "password": "password"
+}
+
+###
+
+
 GET {{AlphaProject.API_HostAddress}}/api/Products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjYxZDBlZDIxLWRjMmEtNDZlNy1iZTRhLWJmZDczYjE1MGRlNiIsImV4cCI6MTc1OTQ0MDQyMiwiaXNzIjoiQWxwaGFQcm9qZWN0SXNzdWVyIiwiYXVkIjoiQWxwaGFQcm9qZWN0QXVkaWVuY2UifQ.mz0kHR7I3JylLnnWpVyAFjmsgw0JNlGeX8eO1poovUQ
 Accept: application/json
 
 ###commento

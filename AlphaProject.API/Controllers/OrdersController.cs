@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AlphaProject.API.Models;
 using AlphaProject.Shared.Dtos;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;       
 
 namespace AlphaProject.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
