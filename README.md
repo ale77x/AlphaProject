@@ -2,7 +2,8 @@
 
 ## Scopo del progetto
 
-AlphaProject è una piattaforma orientata alla **ricerca e sviluppo** di soluzioni software per la gestione di dati aziendali, ordini, prodotti e clienti. Il progetto esplora tecnologie moderne .NET e architetture API RESTful, con l'obiettivo di realizzare componenti riutilizzabili e scalabili.
+AlphaProject è un progetto nato per esplorare tecnologie come .NET Core e architetture API RESTful.
+Come autenticazione si appoggia alla piattaforma Zitadel, mentre il DB è ospitato su Supabase
 
 ## Stato attuale
 
@@ -12,7 +13,7 @@ AlphaProject è una piattaforma orientata alla **ricerca e sviluppo** di soluzio
   - Ordini (`Orders`)
   - Articoli d’ordine (`OrderItems`)
 - Utilizza **Entity Framework Core** per la gestione dei dati e **AutoMapper** per la trasformazione tra DTO e modelli.
-- L’API implementa rotte CRUD, validazione, mapping esteso e relazioni tra entità, con architettura pronta per estensioni future.
+- L’API implementa CRUD, validazione, mapping esteso e relazioni tra entità, con architettura pronta per estensioni future.
 
 ## Prossimi step
 
