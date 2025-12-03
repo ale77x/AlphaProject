@@ -6,7 +6,7 @@
 
 
 GET {{AlphaProject.API_HostAddress}}/api/Products
-Authorization: Bearer 
+Authorization: Bearer B5BSnI2Zi96tG8zwf1h2pc_t8428eR87f2SVDyiU3HIF69UWTyMWCXAFqNX85gOwrc0NEU1ZsnU0rxF1MxKt5EmsDBR6r0YpEH6a1I6L
 Accept: application/json
 
 ###commento
