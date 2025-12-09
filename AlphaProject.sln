@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaProject.API", "AlphaPr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaProject.Shared", "AlphaProject.Shared\AlphaProject.Shared.csproj", "{6ACB9A81-FB4A-4AD2-BE42-A38633D9D1F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaProject.CRM", "AlphaProject.CRM\AlphaProject.CRM.csproj", "{39DA088B-E5A7-40AB-897D-F5D45C141660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6ACB9A81-FB4A-4AD2-BE42-A38633D9D1F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ACB9A81-FB4A-4AD2-BE42-A38633D9D1F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ACB9A81-FB4A-4AD2-BE42-A38633D9D1F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39DA088B-E5A7-40AB-897D-F5D45C141660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39DA088B-E5A7-40AB-897D-F5D45C141660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39DA088B-E5A7-40AB-897D-F5D45C141660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39DA088B-E5A7-40AB-897D-F5D45C141660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

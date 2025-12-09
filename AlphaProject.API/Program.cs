@@ -56,7 +56,7 @@ namespace AlphaProject.API
             app.UseAuthorization();
 
 
-            app.MapControllers();
+            app.MapControllers().RequireAuthorization();
 
             app.Run();
         }
