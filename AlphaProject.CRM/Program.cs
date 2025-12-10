@@ -84,4 +84,18 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .RequireAuthorization();      // tutto il Blazor richiede login
 
+app.MapGet("/logout", async (HttpContext context) =>
+{
+    // Cancella il cookie di autenticazione locale
+    await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    // Avvia il logout presso l’Identity Provider (ZITADEL)
+    await context.SignOutAsync(
+        OpenIdConnectDefaults.AuthenticationScheme,
+        new AuthenticationProperties
+        {
+            // Dove tornare una volta completato il logout
+            RedirectUri = "/"
+        });
+}).RequireAuthorization();
+
 app.Run();
