@@ -2,7 +2,11 @@
 
 ## Scopo del progetto
 
-AlphaProject è un progetto nato per esplorare tecnologie come .NET Core e architetture API RESTful.
+AlphaProject è un progetto nato per esplorare tecnologie come 
+.NET Core 
+API RESTful
+Autenticazione OpenID
+
 Come autenticazione si appoggia alla piattaforma Zitadel, mentre il DB è ospitato su Supabase
 
 ## Stato attuale
