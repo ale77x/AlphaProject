@@ -5,7 +5,7 @@
 AlphaProject è un progetto nato per esplorare tecnologie come 
   - .NET Core 
   - API RESTful
-  - Autenticazione OpenID
+  - Autenticazione OpenID / JWT
 
 Come autenticazione si appoggia alla piattaforma Zitadel, mentre il DB è ospitato su Supabase
 
