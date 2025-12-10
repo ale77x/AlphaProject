@@ -7,7 +7,7 @@ Come autenticazione si appoggia alla piattaforma Zitadel, mentre il DB è ospita
 
 ## Stato attuale
 
-- **API:** in fase di completamento. Attualmente offre funzionalità per la gestione di:
+- **API:** Attualmente offre funzionalità per la gestione di:
   - Clienti (`Clients`)
   - Prodotti (`Products`)
   - Ordini (`Orders`)
@@ -18,9 +18,8 @@ Come autenticazione si appoggia alla piattaforma Zitadel, mentre il DB è ospita
 ## Prossimi step
 
 - **Realizzazione di un CRM in Blazor:**  
-  Lo sviluppo proseguirà con la creazione di un’interfaccia CRM moderna basata su **Blazor**, che si integrerà con le API esistenti per offrire una UI avanzata e strumenti di gestione evoluti.
+  Lo sviluppo procede con la creazione di un’interfaccia CRM moderna basata su **Blazor**, che si integra con le API esistenti, richiedendo l'uso dei suoi verbi tramite autorizzazione OpenID.
 
 ## Note
-
-Il repository è in continua evoluzione e potrebbe subire cambiamenti frequenti.  
+  
 **Contributi** e feedback sono benvenuti per migliorare le funzionalità e la struttura del progetto.
