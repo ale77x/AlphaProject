@@ -1,0 +1,73 @@
+﻿@page "/clients"
+
+@using AlphaProject.Shared.Dtos
+@using Microsoft.AspNetCore.Authorization
+
+
+@attribute [Authorize]
+
+
+@inject AlphaProject.CRM.ClientsService cliService
+
+<PageTitle>Clients</PageTitle>
+
+<h3>Gestione Clienti</h3>
+
+@if (clients == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a href="/clients/create">Aggiungi cliente</a>    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in clients)
+            {
+                <tr>
+                    <td>@client.FirstName</td>
+                    <td>@client.LastName</td>
+                    <td>@client.Email</td>
+                    <td>@client.Phone</td>
+                    <td>
+                       @*  <button class="btn btn-sm btn-primary" @onclick="() => Edit(client)">Modifica</button> *@
+                        <button class="btn btn-sm btn-danger" @onclick="() => Delete(client.ClientId)">Elimina</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+
+}
+
+@code {
+    private List<ClientDto>? clients;
+    private ClientDto currentClient = new();
+   
+
+    protected override async Task OnInitializedAsync()
+    {
+        clients = await cliService.GetClientsAsync();
+    }
+
+
+    private async Task Delete(int id)
+    {
+        if (await cliService.DeleteClientAsync(id))
+        {
+            clients = await cliService.GetClientsAsync();
+        }
+    }
+
+}

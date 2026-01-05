@@ -1,0 +1,59 @@
+﻿<h3>Cliente</h3>
+
+@using AlphaProject.Shared.Dtos
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+
+@attribute [Authorize]
+ 
+
+<EditForm Model="@Client" OnValidSubmit="HandleValidSubmit" FormName="ClientForm">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>Nome:</label>
+        <InputText @bind-Value="Client.FirstName" @bind-Value:event="oninput" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Cognome:</label>
+        <InputText @bind-Value="Client.LastName" @bind-Value:event="oninput" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Email:</label>
+        <InputText @bind-Value="Client.Email" @bind-Value:event="oninput" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Telefono:</label>
+        <InputText @bind-Value="Client.Phone" @bind-Value:event="oninput" class="form-control" />
+    </div>
+
+    @if (!ReadOnly)
+    {
+        <button type="submit" class="btn btn-success">@SubmitLabel</button>
+        <button type="button" class="btn btn-secondary" @onclick="ResetForm">Annulla</button>
+    }
+</EditForm>
+
+@code {
+    [Parameter] public EventCallback<ClientDto> OnValidSubmit { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public string SubmitLabel { get; set; } = "Submit";
+
+    [Parameter] public required ClientDto Client { get; set; } = new();
+
+    private async Task HandleValidSubmit()
+    {
+        if (OnValidSubmit.HasDelegate)
+        {
+            await OnValidSubmit.InvokeAsync(Client);
+        }
+    }
+
+    private void ResetForm()
+    {
+        // Non riassegnare l'istanza: pulisco le proprietà così il parent mantiene la stessa reference.
+        Client.FirstName = "";
+        Client.LastName = "";
+        Client.Email = "";
+        Client.Phone = null;
+    }
+}

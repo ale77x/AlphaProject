@@ -11,6 +11,7 @@ namespace AlphaProject.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [IgnoreAntiforgeryToken]
     public class ClientsController : ControllerBase
     {
         private readonly AppDbContext _context;

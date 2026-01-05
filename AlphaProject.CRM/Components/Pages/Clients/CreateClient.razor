@@ -1,0 +1,32 @@
+﻿@page "/clients/create"
+
+@using AlphaProject.Shared.Dtos
+@using Microsoft.AspNetCore.Authorization
+
+
+@attribute [Authorize]
+
+@inject NavigationManager NavigationManager
+
+@inject AlphaProject.CRM.ClientsService cliService
+
+<PageTitle>Crea Cliente</PageTitle>
+
+
+<ClientForm Client="currentClient" OnValidSubmit="OnClientCreated" SubmitLabel="Crea Cliente" />
+
+@code {
+
+    private ClientDto currentClient = new();
+
+    private async Task OnClientCreated(ClientDto client)
+    {
+        // Uso il client passato dal child per essere sicuro di avere i valori correnti
+        var result = await cliService.CreateClientAsync(client);
+
+        if (result)
+        { 
+            NavigationManager.NavigateTo("/clients");
+        }
+    }
+}

@@ -15,10 +15,13 @@
 }
 else
 {
+    var i = 0;
     <ul>
         @foreach (var o in _orders)
         {
-            <li>@o.OrderDate - @o.TotalAmount</li>
+            
+            <li>@i >  @o.OrderDate - @o.TotalAmount</li>
+            i++;
         }
     </ul>
 }

@@ -45,6 +45,7 @@ builder.Services
 
 
 builder.Services.AddScoped<OrdersClient>();
+builder.Services.AddScoped<ClientsService>();
 
 // 2) HttpClient che porta con sé l’access token dell’utente
 builder.Services.AddHttpContextAccessor();
@@ -72,11 +73,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAntiforgery();
+
 
 // 4) Middleware auth
 app.UseAuthentication();
 app.UseAuthorization();
+
+// ATTENZIONE: UseAntiforgery deve essere chiamato dopo UseAuthentication/UseAuthorization
+app.UseAntiforgery();
 
 app.MapStaticAssets();
 

@@ -1,6 +1,7 @@
 
 using AlphaProject.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -17,7 +18,13 @@ namespace AlphaProject.API
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+                // Disabilita antiforgery per i controller API (solo API)
+                options.Filters.Add(new IgnoreAntiforgeryTokenAttribute());
+            });
+
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
