@@ -13,16 +13,16 @@
 <PageTitle>Crea Cliente</PageTitle>
 
 
-<ClientForm Client="currentClient" OnValidSubmit="OnClientCreated" SubmitLabel="Crea Cliente" />
+<ClientForm OnValidSubmit="OnClientCreated" SubmitLabel="Crea Cliente" />
 
 @code {
 
-    private ClientDto currentClient = new();
+  //  private ClientDto currentClient = new();
 
-    private async Task OnClientCreated(ClientDto client)
+    private async Task OnClientCreated(ClientDto cli)
     {
         // Uso il client passato dal child per essere sicuro di avere i valori correnti
-        var result = await cliService.CreateClientAsync(client);
+        var result = await cliService.CreateClientAsync(cli);
 
         if (result)
         { 

@@ -1,0 +1,42 @@
+@page "/clients/edit/{ClientId:int}"
+
+@using AlphaProject.Shared.Dtos
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+@inject NavigationManager NavigationManager
+@inject AlphaProject.CRM.ClientsService cliService
+
+<PageTitle>Modifica Cliente</PageTitle>
+
+@if (client == null)
+{
+    <div class="alert alert-info">Caricamento...</div>
+}
+else
+{
+    <ClientForm @bind-Client="client" OnValidSubmit="OnClientUpdated" SubmitLabel="Salva Cliente" />
+}
+
+@code {
+    [Parameter]
+    public int ClientId { get; set; }
+
+    private ClientDto? client;
+
+    protected override async Task OnInitializedAsync()
+    {
+        client = await cliService.GetClientAsync(ClientId);
+    }
+
+    private async Task OnClientUpdated(ClientDto cli)
+    {
+        var result = await cliService.UpdateClientAsync(ClientId, cli);
+
+        if (result)
+        {
+            NavigationManager.NavigateTo("/clients");
+        }
+    }
+}

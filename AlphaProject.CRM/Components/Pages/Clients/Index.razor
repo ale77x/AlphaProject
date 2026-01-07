@@ -6,7 +6,7 @@
 
 @attribute [Authorize]
 
-
+@inject NavigationManager NavigationManager
 @inject AlphaProject.CRM.ClientsService cliService
 
 <PageTitle>Clients</PageTitle>
@@ -39,7 +39,7 @@ else
                     <td>@client.Email</td>
                     <td>@client.Phone</td>
                     <td>
-                       @*  <button class="btn btn-sm btn-primary" @onclick="() => Edit(client)">Modifica</button> *@
+                        <button class="btn btn-sm btn-primary" @onclick="() => Edit(client.ClientId)">Modific</button>
                         <button class="btn btn-sm btn-danger" @onclick="() => Delete(client.ClientId)">Elimina</button>
                     </td>
                 </tr>
@@ -61,6 +61,10 @@ else
         clients = await cliService.GetClientsAsync();
     }
 
+    private void Edit(int clientId)
+    {
+        NavigationManager.NavigateTo($"/clients/edit/{clientId}");
+    }
 
     private async Task Delete(int id)
     {
