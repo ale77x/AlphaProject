@@ -8,6 +8,8 @@
 @inject NavigationManager NavigationManager
 @inject AlphaProject.CRM.ClientsService cliService
 
+@rendermode InteractiveServer
+
 <PageTitle>Modifica Cliente</PageTitle>
 
 @if (client == null)
@@ -16,7 +18,7 @@
 }
 else
 {
-    <ClientForm @bind-Client="client" OnValidSubmit="OnClientUpdated" SubmitLabel="Salva Cliente" />
+    <ClientForm Client="client" OnValidSubmit="OnClientUpdated" SubmitLabel="Salva Cliente" />
 }
 
 @code {

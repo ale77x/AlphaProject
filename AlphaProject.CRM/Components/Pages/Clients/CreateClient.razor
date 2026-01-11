@@ -10,14 +10,17 @@
 
 @inject AlphaProject.CRM.ClientsService cliService
 
+
+@rendermode InteractiveServer
+
 <PageTitle>Crea Cliente</PageTitle>
 
 
-<ClientForm OnValidSubmit="OnClientCreated" SubmitLabel="Crea Cliente" />
+<ClientForm OnValidSubmit="OnClientCreated" SubmitLabel="Crea Cliente" Client="currentClient" />
 
 @code {
 
-  //  private ClientDto currentClient = new();
+    private ClientDto currentClient = new();
 
     private async Task OnClientCreated(ClientDto cli)
     {

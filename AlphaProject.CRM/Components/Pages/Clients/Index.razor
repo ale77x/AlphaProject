@@ -39,7 +39,9 @@ else
                     <td>@client.Email</td>
                     <td>@client.Phone</td>
                     <td>
-                        <button class="btn btn-sm btn-primary" @onclick="() => Edit(client.ClientId)">Modific</button>
+                        @* <button class="btn btn-sm btn-primary" @onclick="() => Edit(client.ClientId)">Modifica</button> *@
+                       
+                        <a href="/clients/edit/@client.ClientId" class="btn btn-sm btn-primary">Modifica</a>
                         <button class="btn btn-sm btn-danger" @onclick="() => Delete(client.ClientId)">Elimina</button>
                     </td>
                 </tr>

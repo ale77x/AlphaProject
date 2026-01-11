@@ -5,25 +5,26 @@
 @using Microsoft.AspNetCore.Components.Forms
 
 @attribute [Authorize]
- 
 
-<EditForm Model="Client" OnValidSubmit="HandleValidSubmit" method="post" FormName="ClientForm">
+@* @rendermode InteractiveServer *@
+
+<EditForm Model="@Client" OnValidSubmit="HandleValidSubmit" FormName="Form1" >
     <DataAnnotationsValidator />
     <div class="mb-3">
         <label>Nome:</label>
-        <InputText @bind-Value="Client.FirstName" @bind-Value:event="oninput" class="form-control" />
+        <InputText @bind-Value="Client.FirstName" class="form-control" />
     </div>
     <div class="mb-3">
         <label>Cognome:</label>
-        <InputText @bind-Value="Client.LastName" @bind-Value:event="oninput" class="form-control" />
+        <InputText @bind-Value="Client.LastName" class="form-control" />
     </div>
     <div class="mb-3">
         <label>Email:</label>
-        <InputText @bind-Value="Client.Email" @bind-Value:event="oninput" class="form-control" />
+        <InputText @bind-Value="Client.Email" class="form-control" />
     </div>
     <div class="mb-3">
         <label>Telefono:</label>
-        <InputText @bind-Value="Client.Phone" @bind-Value:event="oninput" class="form-control" />
+        <InputText @bind-Value="Client.Phone" class="form-control" />
     </div>
 
     @if (!ReadOnly)
@@ -34,13 +35,13 @@
 </EditForm>
 
 @code {
-    
+
     [Parameter] public EventCallback<ClientDto> OnValidSubmit { get; set; }
 
     [Parameter] public bool ReadOnly { get; set; }
     [Parameter] public string SubmitLabel { get; set; } = "Submit";
 
-    [SupplyParameterFromForm]  public ClientDto Client { get; set; } = new();
+    [Parameter] public ClientDto Client { get; set; } = new();
 
 
     private async Task HandleValidSubmit()
