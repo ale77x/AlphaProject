@@ -1,8 +1,7 @@
 ﻿@page "/clients"
-
 @using AlphaProject.Shared.Dtos
 @using Microsoft.AspNetCore.Authorization
-
+@using Microsoft.AspNetCore.Components.QuickGrid
 
 @attribute [Authorize]
 
@@ -13,59 +12,54 @@
 
 <h3>Gestione Clienti</h3>
 
-@if (clients == null)
+@if (clients is null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <a href="/clients/create">Aggiungi cliente</a>    
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var client in clients)
-            {
-                <tr>
-                    <td>@client.FirstName</td>
-                    <td>@client.LastName</td>
-                    <td>@client.Email</td>
-                    <td>@client.Phone</td>
-                    <td>
-                        @* <button class="btn btn-sm btn-primary" @onclick="() => Edit(client.ClientId)">Modifica</button> *@
-                       
-                        <a href="/clients/edit/@client.ClientId" class="btn btn-sm btn-primary">Modifica</a>
-                        <button class="btn btn-sm btn-danger" @onclick="() => Delete(client.ClientId)">Elimina</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <!-- casella di ricerca per filtrare -->
+    <input type="search" class="form-control mb-2" @bind="searchString" placeholder="Cerca clienti..." />
 
-    <hr />
+    <!-- griglia con colonne ordinabili -->
 
+    <QuickGrid TGridItem="ClientDto" Items="filteredClients" Class="table table-striped" >
+        <PropertyColumn Property="@(c => c.FirstName)" Title="Nome" Sortable="true" />
+        <PropertyColumn Property="@(c => c.LastName)" Title="Cognome" Sortable="true" />
+        <PropertyColumn Property="@(c => c.Email)" Title="Email" Sortable="true" />
+        <PropertyColumn Property="@(c => c.Phone)" Title="Telefono" Sortable="true" />
+        <TemplateColumn TGridItem="ClientDto" Title="Azioni">
+            <ChildContent Context="context">
+                <a class="btn btn-sm btn-primary"
+                   href="/clients/edit/@context.ClientId">
+                    Modifica
+                </a>
+                <button class="btn btn-sm btn-danger"
+                        @onclick="@(() => Delete(context.ClientId))">
+                    Elimina
+                </button>
+            </ChildContent>
+        </TemplateColumn>
+    </QuickGrid>
 }
 
 @code {
     private List<ClientDto>? clients;
-    private ClientDto currentClient = new();
-   
+    private string searchString = string.Empty;
+
+    private IQueryable<ClientDto> filteredClients =>
+        string.IsNullOrWhiteSpace(searchString)
+            ? clients?.AsQueryable() ?? Enumerable.Empty<ClientDto>().AsQueryable()
+            : clients?.Where(c =>
+                (!string.IsNullOrEmpty(c.FirstName) && c.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ||
+                (!string.IsNullOrEmpty(c.LastName) && c.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ||
+                (!string.IsNullOrEmpty(c.Email) && c.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ||
+                (!string.IsNullOrEmpty(c.Phone) && c.Phone.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            ).AsQueryable() ?? Enumerable.Empty<ClientDto>().AsQueryable();
 
     protected override async Task OnInitializedAsync()
     {
         clients = await cliService.GetClientsAsync();
-    }
-
-    private void Edit(int clientId)
-    {
-        NavigationManager.NavigateTo($"/clients/edit/{clientId}");
     }
 
     private async Task Delete(int id)
@@ -75,5 +69,4 @@ else
             clients = await cliService.GetClientsAsync();
         }
     }
-
 }
