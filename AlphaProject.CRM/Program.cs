@@ -44,18 +44,29 @@ builder.Services
     });
 
 
-builder.Services.AddScoped<OrdersClient>();
-builder.Services.AddScoped<ClientsService>();
+
 
 // 2) HttpClient che porta con sé l’access token dell’utente
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<AccessTokenHandler>();
+// Registrazione del delegating handler
+builder.Services.AddTransient<LogoutHandler>();
 
 builder.Services.AddHttpClient("ApiWithUserToken", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7223/"); // URL della tua API
 })
-.AddHttpMessageHandler<AccessTokenHandler>();
+// Inserisci prima AccessTokenHandler per aggiungere il Bearer token
+.AddHttpMessageHandler<AccessTokenHandler>()
+// Poi LogoutHandler per gestire 401/403 e fare il logout
+.AddHttpMessageHandler<LogoutHandler>();
+
+builder.Services.AddScoped<OrdersClient>();
+builder.Services.AddScoped<ClientsService>();
+
+//servizi di autenticazione a cascata così che l’AuthorizeRouteView riceva
+//automaticamente il Task<AuthenticationState> necessario per mostrare il contenuto autorizzato o non autorizzato
+builder.Services.AddCascadingAuthenticationState();
 
 // 3) Authorization: tutto il sito richiede utente autenticato
 builder.Services.AddAuthorization(options =>
