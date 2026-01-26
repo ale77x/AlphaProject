@@ -1,6 +1,7 @@
-﻿using System.Text.Json;
+﻿using AlphaProject.Shared.Dtos; // modello condiviso oppure definire un DTO identico
+using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
-using AlphaProject.Shared.Dtos; // modello condiviso oppure definire un DTO identico
 
 
 namespace AlphaProject.CRM
@@ -16,8 +17,25 @@ namespace AlphaProject.CRM
 
         private const string Url = "api/clients";
 
-        public async Task<List<ClientDto>> GetClientsAsync() =>
-            await _http.GetFromJsonAsync<List<ClientDto>>(Url) ?? new();
+        public async Task<List<ClientDto>> GetClientsAsync()
+        {
+            var response = await _http.GetAsync(Url);
+
+            // Se la risposta è 401/403, LogoutHandler avrà già cancellato il cookie.
+            // Restituisci una lista vuota (o null) senza lanciare eccezioni.
+            if (response.StatusCode == HttpStatusCode.Unauthorized ||
+                response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                return new List<ClientDto>();
+            }
+
+            // Per altri codici di errore puoi scegliere di rilanciare o gestire diversamente.
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<List<ClientDto>>() ?? new();
+
+        }
+            //await _http.GetFromJsonAsync<List<ClientDto>>(Url) ?? new();
 
         public async Task<ClientDto?> GetClientAsync(int id) =>
             await _http.GetFromJsonAsync<ClientDto>($"{Url}/{id}");
